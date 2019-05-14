@@ -1,0 +1,3 @@
+class CrunchNews::Scraper
+  
+end 
