@@ -3,7 +3,7 @@ class Cli
   def call
     input = 0 
     
-    Scraper.news_scrape
+    Scraper.overall_news_scrape
     
     loop do |x|
       
@@ -26,8 +26,9 @@ class Cli
     
     end 
    
-  def goodbye 
-    "You have ended the program. Have a nice day :)."
-  end 
+    def goodbye 
+      "You have ended the program. Have a nice day :)."
+    end 
   
+  end
 end 
