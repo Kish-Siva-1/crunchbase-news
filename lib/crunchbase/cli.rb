@@ -3,7 +3,8 @@ class Cli
   def call
     input = 0 
     
-    Scraper.overall_news_scrape
+    Scraper.page_loop
+    Scraper.page_news_scrape
     
     loop do |x|
       
