@@ -1,8 +1,10 @@
 class Scraper
   
+  attr_accessor :news_scraper
+  
   def self.page_loop(number_of_pages=1)
     i = 1
-    news_scraper = []
+    @news_scraper = []
     until i == number_of_pages do 
       crunch_link = "https://news.crunchbase.com/page/#{i}"
       Scraper.page_news_scrape(crunch_link)
@@ -17,8 +19,6 @@ class Scraper
     html = open(crunch_link)
     doc = Nokogiri::HTML(html)
     
-      doc.css(".entry-content p").text
-      doc.css(".herald-read-more").attr("title").text
       #everything should be beneath the entry-header tag title tag  = entry-title h3, author tag = fn, content tag entry-content, date tag is updated, url href "fn a"
         doc.css(".entry-header").each do |x|
           crunch_title = x.css(".entry-title").text
@@ -26,7 +26,7 @@ class Scraper
           crunch_date = x.css(".updated").text
           crunch_category = x.css(".meta-category").text
           crunch_url = x.css(".entry-title a").attr("href").text 
-          news_scraper << {title: crunch_title, author: crunch_author, date: crunch_date, category: crunch_category, url: crunch_url}      
+          @news_scraper << {title: crunch_title, author: crunch_author, date: crunch_date, category: crunch_category, url: crunch_url}      
         end 
     
   end 

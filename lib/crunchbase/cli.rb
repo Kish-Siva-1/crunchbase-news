@@ -3,8 +3,7 @@ class Cli
   def call
     input = 0 
     
-    #Scraper.page_loop(10)
-    Scraper.content_news_scrape("https://news.crunchbase.com/news/big-revenues-huge-valuations-and-major-losses-charting-the-era-of-the-unicorn-ipo/")
+    Scraper.page_loop(10)
     
     loop do |x|
       
@@ -16,20 +15,18 @@ class Cli
         "The scraper is running. It will automatically extract the previous 10 pages of news items."
         #Saves the list of news items and article numbers in news_story 
         #news_story information will be stored here
-        "The Crunchase News scraper has finished running. News articles between {date 1} and {date 2} are available. Please type the dates you would like to see News articles for (dd/mm/yyyy)."
-        "Start Date:"
-        first_date = get.strip 
-        "End Date:"
-        end_date = get.strip
+        "The Crunchase News scraper has finished running. News articles between for the past 10 pages are available. Please type the page you would like to see News articles for."
+        "Page Number:"
+        page_number = get.strip 
       elsif input == 'Exit'  
         goodbye
       end 
     
     end 
-   
+  end 
+  
     def goodbye 
       "You have ended the program. Have a nice day :)."
     end 
   
-  end
 end 
