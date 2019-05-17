@@ -1,17 +1,16 @@
 class Scraper
   
-  def self.page_loop(number_of_pages)
+  def self.page_loop(number_of_pages=1)
     i = 1
-    html = open(crunch_link)
+    news_scraper = []
     until i == number_of_pages do 
-      crunch_link = "https://news.crunchbase.com/page/" & "#{i}"
+      crunch_link = "https://news.crunchbase.com/page/#{i}"
+      Scraper.page_news_scrape(crunch_link)
       i+=1
-    end 
-    binding.pry 
+    end
   end 
   
   def self.page_news_scrape(crunch_link)
-    news_scraper = []
     
     #extract the overall news articles 
     #extract article_title, author, date and article text summary  
@@ -29,15 +28,16 @@ class Scraper
           crunch_url = x.css(".entry-title a").attr("href").text 
           news_scraper << {title: crunch_title, author: crunch_author, date: crunch_date, category: crunch_category, url: crunch_url}      
         end 
-          binding.pry
     
   end 
 
   def self.content_news_scrape(news_article_link)
     #extract the detail of the news article 
-    html = open("https://news.crunchbase.com")
+    html = open(news_article_link)
     doc = Nokogiri::HTML(html)
-
+    storage = []
+    storage = doc.css(".entry-content p").text
+    #need to reformat the text to have a new line for every paragraph 
   end
   
 end 

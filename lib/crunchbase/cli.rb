@@ -3,8 +3,8 @@ class Cli
   def call
     input = 0 
     
-    Scraper.page_loop
-    Scraper.page_news_scrape
+    #Scraper.page_loop(10)
+    Scraper.content_news_scrape("https://news.crunchbase.com/news/big-revenues-huge-valuations-and-major-losses-charting-the-era-of-the-unicorn-ipo/")
     
     loop do |x|
       
