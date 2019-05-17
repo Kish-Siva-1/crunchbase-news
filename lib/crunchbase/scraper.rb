@@ -11,7 +11,11 @@ class Scraper
       doc.css(".herald-read-more").attr("title").text
       #everything should be beneath the entry-header tag title tag  = entry-title h3, author tag = fn, content tag entry-content, date tag is updated, url href "fn a"
         doc.css(".entry-header").each do |x|
-          x.css(".meta-category").text
+          title = x.css(".entry-title").text
+          author = x.css(".fn").text
+          date = x.css(".updated").text
+          category = x.css(".meta-category").text
+          url = x.css(".entry-title a").attr("href").text 
         end 
           binding.pry
     
