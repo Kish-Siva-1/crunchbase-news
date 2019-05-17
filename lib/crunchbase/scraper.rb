@@ -38,11 +38,10 @@ class Scraper
   def self.content_news_scrape(news_article_link)
     html = open(news_article_link)
     doc = Nokogiri::HTML(html)
-    storage = doc.css(".entry-content p").collect do |x|
-        x.text if x.children[0].name =="text"
-    end.compact.join("\n \n")
     news_story = NewsStory.all.select{|x| x.url == news_article_link}[0]
-    news_story.content = storage
+    news_story.content = doc.css(".entry-content p").collect do |x|
+        x.text if x.children[0].name =="text"
+    end.compact.join("\n \n") 
   end
   
 end 
