@@ -2,7 +2,7 @@ class Cli
   
   def call
     input = 0 
-  
+    
     until input == 'Exit' 
       
       puts "Welcome to the Crunchbase News scraper. Type 'Start' to start the scraper. To quit the program type 'Exit'." 
@@ -35,18 +35,25 @@ class Cli
   
   def goodbye 
     "You have ended the program. Have a nice day :)."
+    return
   end 
   
   def display_article(article_no = 1)
     article = NewsStory.all[article_no - 1]
-    "#{article.title} | #{article.author} | #{article.date}"
+    Scraper.content_news_scrape(article.url)
+    puts "Title: #{article.title}"
+    puts "Author: #{article.author}" 
+    puts "Date: #{article.date}" 
+    puts "Content: #{article.content}"
   end 
   
   def display_page(page_number = 1)
     i=1
     display = NewsStory.all.select{|x| x.link == "https://news.crunchbase.com/page/#{page_number}"}
     display.each do |x|
-      "#{i} #{x.title} | #{x.author} | #{x.date}" 
+      puts "#{i} Title: #{x.title}"
+      puts "  Author: #{x.author}" 
+      puts "  Date: #{x.date}" 
       i+=1
     end 
   end 

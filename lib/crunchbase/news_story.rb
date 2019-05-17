@@ -1,6 +1,6 @@
 class NewsStory
   #all the information about the story (description, author, articles information)
-  attr_accessor :title, :author, :date, :category, :url, :link
+  attr_accessor :title, :author, :date, :category, :url, :link, :content
   
   @@all = []
   
@@ -11,6 +11,7 @@ class NewsStory
     @category = news_hash[:category] if news_hash[:category]
     @url = news_hash[:url] if news_hash[:url]
     @link = news_hash[:link] if news_hash[:link]
+    @content = []
     @@all << self
   end 
   
