@@ -39,7 +39,7 @@ class Cli
         
         until page_number == 'Exit' 
           puts "\n If you would like to see a different page, type the page number in the format 'Page X', e.g. Page 3. Otherwise please choose the article you would like to read from the list above by typing the article number e.g. 'Article 1' for article 1. To quit type 'Exit'."
-          binding.pry
+          
           page_number = gets.strip.capitalize
 
           if page_number.include?('Page') && page_number.sub("Page", "").strip.to_i.between?(1,10)
@@ -47,7 +47,7 @@ class Cli
           end 
           
           until (page_number.include?('Page') && page_number.sub("Page","").strip.to_i.between?(1,10)) || page_number == 'Exit' || ((page_number.include?('Article') && page_number.sub("Article","").strip.to_i.between?(1,NewsStory.all.select{|x| x.link == "https://news.crunchbase.com/page/#{article_page}"}.count)))  
-          binding.pry
+          
             if page_number.include?('Page') == true && page_number.sub("Page", "").strip.to_i.between?(1,10)==false
               begin
                 raise PartnerError1
@@ -84,7 +84,7 @@ class Cli
             end
           
           end
-          binding.pry
+          
           if page_number.include?("Page") 
             display_page(page_number.sub("Page", "").strip.to_i)
           else
@@ -103,7 +103,7 @@ class Cli
   end 
 
   def display_article(article_no = 1, page_number=1)
-    binding.pry
+    
     article = NewsStory.all.select{|x| x.link == "https://news.crunchbase.com/page/#{page_number}"}
     article = article[article_no - 1]
     if article.content == []
