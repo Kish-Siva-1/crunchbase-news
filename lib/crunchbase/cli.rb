@@ -37,10 +37,9 @@ class Cli
         
         until page_number == 'Exit' 
           puts "\n If you would like to see a different page, type the page number in the format 'Page X', e.g. Page 3. Otherwise please choose the article you would like to read from the list above by typing the article number e.g. '1' for article 1. To quit type 'Exit'."
-          
-          until page_number.include?('Page') && (page_number != 'Exit') && (page_number != page_number.to_i)
-          
+          binding.pry
           page_number = gets.strip.capitalize
+          until page_number.include?('Page') || (page_number == 'Exit') || (page_number == page_number.to_i)
           binding.pry
             if page_number.include?('Page')==false || (page_number != 'Exit') || (page_number != page_number.to_i)
               begin
@@ -48,15 +47,15 @@ class Cli
               rescue PartnerError1 => error
                   puts error.message2
               end
+              page_number = gets.strip.capitalize
             end
-          
-            if page_number.include?("Page") 
-              display_page(page_number.sub("Page", "").strip.to_i)
-            else
-              display_article(page_number.to_i)
-            end 
-          
           end
+          
+          if page_number.include?("Page") 
+            display_page(page_number.sub("Page", "").strip.to_i)
+          else
+            display_article(page_number.to_i)
+          end 
           
         end 
         
