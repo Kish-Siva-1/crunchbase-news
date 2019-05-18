@@ -3,6 +3,7 @@ class Cli
   def call
     input = 'na' 
     page_number = 'na'
+    article_page = 1
     
     until input.capitalize == 'Exit' 
       
@@ -40,7 +41,7 @@ class Cli
           puts "\n If you would like to see a different page, type the page number in the format 'Page X', e.g. Page 3. Otherwise please choose the article you would like to read from the list above by typing the article number e.g. 'Article 1' for article 1. To quit type 'Exit'."
           binding.pry
           page_number = gets.strip.capitalize
-          article_page = 1
+
           if page_number.include?('Page') 
             article_page = page_number.sub("Page", "").strip.to_i
           end 
@@ -58,12 +59,35 @@ class Cli
                 article_page = page_number.sub("Page", "").strip.to_i
               end 
             end
+            
+            if page_number.sub("Page", "").strip.to_i.between?(1,10) == false
+              page_number.sub("Page", "").strip.to_i
+              begin
+                raise PartnerError1
+              rescue PartnerError1 => error
+                  puts error.message3
+              end
+              page_number = gets.strip.capitalize
+              if page_number.include?('Page') 
+                article_page = page_number.sub("Page", "").strip.to_i
+              end 
+            elsif page_number.sub("Article", "").strip.to_i.between?(1,NewsStory.all.select{|x| x.link == "https://news.crunchbase.com/page/#{article_page}"}.count) == false
+              begin
+                raise PartnerError1
+              rescue PartnerError1 => error
+                  puts error.message4
+              end
+              page_number = gets.strip.capitalize
+              if page_number.include?('Page') 
+                article_page = page_number.sub("Page", "").strip.to_i
+              end 
+            end 
           end
           
           if page_number.include?("Page") 
             display_page(page_number.sub("Page", "").strip.to_i)
           else
-            display_article(page_number.sub("Article", "").strip.to_i, article_page )
+            display_article(page_number.sub("Article", "").strip.to_i, article_page)
           end 
           
         end 
@@ -109,5 +133,13 @@ class PartnerError1 < StandardError
   
   def message2 
     "Input Error: Please type 'Exit' to end the program, 'Page X' to move to a specific page or 'Article X' to choose an article."
+  end
+  
+  def message3 
+    "Input Error: Please enter a Page number between 0 and 10."
+  end
+  
+  def message4 
+    "Input Error: Please enter a valid Article number."
   end
 end
