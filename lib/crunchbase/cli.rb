@@ -8,7 +8,7 @@ class Cli
       
       puts "\n Welcome to the Crunchbase News scraper. Type 'Start' to start the scraper. To quit the program type 'Exit'." 
     
-      input = gets.strip #add some data validation rules
+      input = gets.strip.capitalize #add some data validation rules
       
       if input == 'Start' 
         puts "\n The scraper is running. It will automatically extract the previous 10 pages of news items."
@@ -23,13 +23,13 @@ class Cli
         
         display_page 
         
-        until page_number == 'Exit' 
+        until page_number.capitalize == 'Exit' 
           puts "\n If you would like to see a different page, type the page number in the format 'Page X', e.g. Page 3. Otherwise please choose the article you would like to read from the list above by typing the article number e.g. '1' for article 1. To quit type 'Exit'."
           
-          page_number = gets.strip 
+          page_number = gets.strip.capitalize
           
-            if page_number.include?("Page") 
-              display_page(page_number.sub("Page", "").strip.to_i)
+            if page_numberinclude?("Page") 
+              display_page(page_numbersub("Page", "").strip.to_i)
             else
               display_article(page_number.to_i)
             end 
