@@ -6,7 +6,7 @@ class Cli
     article_page = 1
     
     until input.capitalize == 'Exit' 
-      
+      if page_number == 'Exit' then return end 
       puts "\n Welcome to the Crunchbase News scraper. Type 'Start' to start the scraper. To quit the program type 'Exit'.\n" 
       
       input = gets.strip.capitalize
@@ -99,22 +99,22 @@ class Cli
     
     end 
     
-    puts "\n You have ended the program. Have a nice day :)."
-    return
-    
   end 
 
   def display_article(article_no = 1, page_number=1)
     
     article = NewsStory.all.select{|x| x.link == "https://news.crunchbase.com/page/#{page_number}"}
     article = article[article_no - 1]
+    binding.pry
     if article.content == []
       Scraper.content_news_scrape(article.url)
     end 
-    puts "\nTitle: #{article.title}"
-    puts "\nAuthor: #{article.author}" 
-    puts "\nDate: #{article.date}" 
-    puts "\nContent: #{article.content}"
+    article_2 = NewsStory.all.select{|x| x.url == article.url}[0]
+    binding.pry
+    puts "\nTitle: #{article_2.title}"
+    puts "\nAuthor: #{article_2.author}" 
+    puts "\nDate: #{article_2.date}" 
+    puts "\nContent: #{article_2.content}"
   end 
   
   def display_page(page_number = 1)
@@ -129,7 +129,7 @@ class Cli
   end 
   
   def reset_all
-    input = 'na' 
+    input = 'na'
     page_number = 'na'
     article_page = 1
   end 
