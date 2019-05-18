@@ -1,25 +1,29 @@
 class Cli
   
   def call
-    input = 0 
-    page_number = nil
+    input = 'na' 
+    page_number = 'na'
     
     until input.capitalize == 'Exit' 
       
       puts "\n Welcome to the Crunchbase News scraper. Type 'Start' to start the scraper. To quit the program type 'Exit'." 
     
-      input = gets.strip.capitalize 
+      until (input != 'Start') && (input != 'Exit')
       
-      if input != ('Exit' || 'Start')
-        begin
-          raise PartnerError
-        rescue PartnerError => error
-            puts error.message
+        input = gets.strip.capitalize 
+        binding.pry
+        if (input != 'Start') && (input != 'Exit')
+          begin
+            raise PartnerError1
+          rescue PartnerError1 => error
+              puts error.message
+          end
         end
-      end
+
+      end 
       
       if input == 'Start' 
-        puts "\n The scraper is running. It will automatically extract the previous 10 pages of news items."
+        puts "\n The scraper is running. It will automatically extract the latest 10 pages of news items."
         
         Scraper.page_loop(10)
 
@@ -36,11 +40,24 @@ class Cli
           
           page_number = gets.strip.capitalize
           
+          until page_number.include?('Page') && (page_number != 'Exit') && (page_number != page_number.to_i)
+          binding.pry
+            if page_number.include?('Page') && (page_number != 'Exit') && (page_number != page_number.to_i)
+              begin
+                raise PartnerError1
+              rescue PartnerError1 => error
+                  puts error.message2
+              end
+            end
+          
             if page_number.include?("Page") 
               display_page(page_number.sub("Page", "").strip.to_i)
             else
               display_article(page_number.to_i)
             end 
+          
+          end
+          
         end 
         
       end 
@@ -76,8 +93,12 @@ class Cli
   
 end 
 
-class PartnerError < StandardError
+class PartnerError1 < StandardError
   def message 
-    "You must give the get_married method an argument of an instance of the person class!"
+    "Error: Please type 'Start' to continue or 'Exit' to quit the program."
+  end
+  
+  def message2 
+    "Error: Please type 'Exit' to end the program, 'Page X' to move to a specific page or a number to choose an article."
   end
 end
