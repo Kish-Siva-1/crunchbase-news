@@ -7,11 +7,11 @@ class Cli
     until input.capitalize == 'Exit' 
       
       puts "\n Welcome to the Crunchbase News scraper. Type 'Start' to start the scraper. To quit the program type 'Exit'." 
-    
-      until (input != 'Start') && (input != 'Exit')
       
-        input = gets.strip.capitalize 
-        binding.pry
+      until (input == 'Start') || (input == 'Exit')
+      
+        input = gets.strip.capitalize
+         
         if (input != 'Start') && (input != 'Exit')
           begin
             raise PartnerError1
@@ -38,11 +38,11 @@ class Cli
         until page_number == 'Exit' 
           puts "\n If you would like to see a different page, type the page number in the format 'Page X', e.g. Page 3. Otherwise please choose the article you would like to read from the list above by typing the article number e.g. '1' for article 1. To quit type 'Exit'."
           
-          page_number = gets.strip.capitalize
-          
           until page_number.include?('Page') && (page_number != 'Exit') && (page_number != page_number.to_i)
+          
+          page_number = gets.strip.capitalize
           binding.pry
-            if page_number.include?('Page') && (page_number != 'Exit') && (page_number != page_number.to_i)
+            if page_number.include?('Page')==false || (page_number != 'Exit') || (page_number != page_number.to_i)
               begin
                 raise PartnerError1
               rescue PartnerError1 => error
@@ -95,10 +95,10 @@ end
 
 class PartnerError1 < StandardError
   def message 
-    "Error: Please type 'Start' to continue or 'Exit' to quit the program."
+    "Input Error: Please type 'Start' to continue or 'Exit' to quit the program."
   end
   
   def message2 
-    "Error: Please type 'Exit' to end the program, 'Page X' to move to a specific page or a number to choose an article."
+    "Input Error: Please type 'Exit' to end the program, 'Page X' to move to a specific page or a number to choose an article."
   end
 end
