@@ -8,9 +8,9 @@ class Cli
       
       puts "\n Welcome to the Crunchbase News scraper. Type 'Start' to start the scraper. To quit the program type 'Exit'." 
       
-      until (input == 'Start') || (input == 'Exit')
+      input = gets.strip.capitalize
       
-        input = gets.strip.capitalize
+      until (input == 'Start') || (input == 'Exit')
          
         if (input != 'Start') && (input != 'Exit')
           begin
@@ -18,6 +18,7 @@ class Cli
           rescue PartnerError1 => error
               puts error.message
           end
+          input = gets.strip.capitalize
         end
 
       end 
@@ -36,25 +37,33 @@ class Cli
         display_page 
         
         until page_number == 'Exit' 
-          puts "\n If you would like to see a different page, type the page number in the format 'Page X', e.g. Page 3. Otherwise please choose the article you would like to read from the list above by typing the article number e.g. '1' for article 1. To quit type 'Exit'."
+          puts "\n If you would like to see a different page, type the page number in the format 'Page X', e.g. Page 3. Otherwise please choose the article you would like to read from the list above by typing the article number e.g. 'Article 1' for article 1. To quit type 'Exit'."
           binding.pry
           page_number = gets.strip.capitalize
-          until page_number.include?('Page') || (page_number == 'Exit') || (page_number == page_number.to_i)
+          article_page = 1
+          if page_number.include?('Page') 
+            article_page = page_number.sub("Page", "").strip.to_i
+          end 
+          
+          until page_number.include?('Page') || (page_number == 'Exit') || page_number.include?('Article')
           binding.pry
-            if page_number.include?('Page')==false || (page_number != 'Exit') || (page_number != page_number.to_i)
+            if page_number.include?('Page')==false || (page_number != 'Exit') || page_number.include?('Article')==false
               begin
                 raise PartnerError1
               rescue PartnerError1 => error
                   puts error.message2
               end
               page_number = gets.strip.capitalize
+              if page_number.include?('Page') 
+                article_page = page_number.sub("Page", "").strip.to_i
+              end 
             end
           end
           
           if page_number.include?("Page") 
             display_page(page_number.sub("Page", "").strip.to_i)
           else
-            display_article(page_number.to_i)
+            display_article(page_number.sub("Article", "").strip.to_i, article_page )
           end 
           
         end 
@@ -68,8 +77,9 @@ class Cli
     
   end 
 
-  def display_article(article_no = 1)
-    article = NewsStory.all[article_no - 1]
+  def display_article(article_no = 1, page_number=1)
+    article = NewsStory.all.select{|x| x.link == "https://news.crunchbase.com/page/#{page_number}"}
+    article = article[article_no - 1]
     if article.content = []
       Scraper.content_news_scrape(article.url)
     end 
@@ -98,6 +108,6 @@ class PartnerError1 < StandardError
   end
   
   def message2 
-    "Input Error: Please type 'Exit' to end the program, 'Page X' to move to a specific page or a number to choose an article."
+    "Input Error: Please type 'Exit' to end the program, 'Page X' to move to a specific page or 'Article X' to choose an article."
   end
 end
