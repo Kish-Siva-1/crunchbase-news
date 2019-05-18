@@ -105,12 +105,12 @@ class Cli
     
     article = NewsStory.all.select{|x| x.link == "https://news.crunchbase.com/page/#{page_number}"}
     article = article[article_no - 1]
-    binding.pry
+    
     if article.content == []
       Scraper.content_news_scrape(article.url)
     end 
     article_2 = NewsStory.all.select{|x| x.url == article.url}[0]
-    binding.pry
+    
     puts "\nTitle: #{article_2.title}"
     puts "\nAuthor: #{article_2.author}" 
     puts "\nDate: #{article_2.date}" 
