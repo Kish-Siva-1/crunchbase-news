@@ -27,6 +27,8 @@ class Cli
       if input == 'Start' 
         puts "\n The scraper is running. It will automatically extract the latest 10 pages of news items."
         
+        reset_all
+        
         Scraper.page_loop(10)
 
         puts "\n The Crunchase News scraper has finished running. News articles for the past 10 pages are available. The first page is displayed below. Choose one of these articles or choose another page you would like to see News articles for.\n"
@@ -124,6 +126,12 @@ class Cli
       puts "  Date: #{x.date}" 
       i+=1
     end 
+  end 
+  
+  def reset_all
+    input = 'na' 
+    page_number = 'na'
+    article_page = 1
   end 
   
 end 
