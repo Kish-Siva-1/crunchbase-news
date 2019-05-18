@@ -42,46 +42,47 @@ class Cli
           binding.pry
           page_number = gets.strip.capitalize
 
-          if page_number.include?('Page') 
+          if page_number.include?('Page') && page_number.sub("Page", "").strip.to_i.between?(1,10)
             article_page = page_number.sub("Page", "").strip.to_i
           end 
           
-          until page_number.include?('Page') || (page_number == 'Exit') || page_number.include?('Article') || page_number.sub("Page", "").strip.to_i.between?(1,10) == false || page_number.sub("Article", "").strip.to_i.between?(1,NewsStory.all.select{|x| x.link == "https://news.crunchbase.com/page/#{article_page}"}.count) == false 
+          until (page_number.include?('Page') && page_number.sub("Page","").strip.to_i.between?(1,10)) || page_number == 'Exit' || ((page_number.include?('Article') && page_number.sub("Article","").strip.to_i.between?(1,NewsStory.all.select{|x| x.link == "https://news.crunchbase.com/page/#{article_page}"}.count)))  
           binding.pry
-            if page_number.include?('Page')==false || (page_number != 'Exit') || page_number.include?('Article')==false
+            if page_number.include?('Page') == true && page_number.sub("Page", "").strip.to_i.between?(1,10)==false
               begin
                 raise PartnerError1
               rescue PartnerError1 => error
                   puts error.message2
               end
               page_number = gets.strip.capitalize
-              if page_number.include?('Page') 
+              if page_number.include?('Page') && page_number.sub("Page","").strip.to_i.between?(1,10)
                 article_page = page_number.sub("Page", "").strip.to_i
               end 
-            end
-            
-            if page_number.sub("Page", "").strip.to_i.between?(1,10) == false
-              page_number.sub("Page", "").strip.to_i
+            elsif page_number.include?('Article') == true && page_number.sub("Article","").strip.to_i.between?(1,NewsStory.all.select{|x| x.link == "https://news.crunchbase.com/page/#{article_page}"}.count) == false
               begin
                 raise PartnerError1
               rescue PartnerError1 => error
                   puts error.message3
               end
               page_number = gets.strip.capitalize
-              if page_number.include?('Page') 
+              if page_number.include?('Page') && page_number.sub("Page","").strip.to_i.between?(1,10)
                 article_page = page_number.sub("Page", "").strip.to_i
               end 
-            elsif page_number.sub("Article", "").strip.to_i.between?(1,NewsStory.all.select{|x| x.link == "https://news.crunchbase.com/page/#{article_page}"}.count) == false
+            
+            else
+              
               begin
                 raise PartnerError1
               rescue PartnerError1 => error
                   puts error.message4
               end
               page_number = gets.strip.capitalize
-              if page_number.include?('Page') 
+              if page_number.include?('Page') && page_number.sub("Page","").strip.to_i.between?(1,10)
                 article_page = page_number.sub("Page", "").strip.to_i
               end 
-            end 
+            
+            end
+          
           end
           binding.pry
           if page_number.include?("Page") 
@@ -133,14 +134,14 @@ class PartnerError1 < StandardError
   end
   
   def message2 
-    "Input Error: Please type 'Exit' to end the program, 'Page X' to move to a specific page or 'Article X' to choose an article."
+    "Input Error: Please type 'Exit' to end the program or a page number between 0 and 10 to move to a specific page."
   end
   
   def message3 
-    "Input Error: Please enter a Page number between 0 and 10."
+    "Input Error: Please type 'Exit' to end the program or 'Article X' to move to a specific article out of the ones provided."
   end
   
   def message4 
-    "Input Error: Please enter a valid Article number."
+    "Input Error: Please type 'Exit' to end the program or 'Page X' to move to a specific page or 'Article X' to move to a specific article."
   end
 end
