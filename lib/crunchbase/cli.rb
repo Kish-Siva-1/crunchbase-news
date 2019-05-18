@@ -46,7 +46,7 @@ class Cli
             article_page = page_number.sub("Page", "").strip.to_i
           end 
           
-          until page_number.include?('Page') || (page_number == 'Exit') || page_number.include?('Article')
+          until page_number.include?('Page') || (page_number == 'Exit') || page_number.include?('Article') || page_number.sub("Page", "").strip.to_i.between?(1,10) == false || page_number.sub("Article", "").strip.to_i.between?(1,NewsStory.all.select{|x| x.link == "https://news.crunchbase.com/page/#{article_page}"}.count) == false 
           binding.pry
             if page_number.include?('Page')==false || (page_number != 'Exit') || page_number.include?('Article')==false
               begin
@@ -83,7 +83,7 @@ class Cli
               end 
             end 
           end
-          
+          binding.pry
           if page_number.include?("Page") 
             display_page(page_number.sub("Page", "").strip.to_i)
           else
@@ -102,9 +102,10 @@ class Cli
   end 
 
   def display_article(article_no = 1, page_number=1)
+    binding.pry
     article = NewsStory.all.select{|x| x.link == "https://news.crunchbase.com/page/#{page_number}"}
     article = article[article_no - 1]
-    if article.content = []
+    if article.content == []
       Scraper.content_news_scrape(article.url)
     end 
     puts "\nTitle: #{article.title}"
