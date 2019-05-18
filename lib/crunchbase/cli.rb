@@ -7,7 +7,7 @@ class Cli
     
     until input.capitalize == 'Exit' 
       
-      puts "\n Welcome to the Crunchbase News scraper. Type 'Start' to start the scraper. To quit the program type 'Exit'." 
+      puts "\n Welcome to the Crunchbase News scraper. Type 'Start' to start the scraper. To quit the program type 'Exit'.\n" 
       
       input = gets.strip.capitalize
       
@@ -29,7 +29,7 @@ class Cli
         
         Scraper.page_loop(10)
 
-        puts "\n The Crunchase News scraper has finished running. News articles for the past 10 pages are available. The first page is displayed below. Choose one of these articles or choose another page you would like to see News articles for."
+        puts "\n The Crunchase News scraper has finished running. News articles for the past 10 pages are available. The first page is displayed below. Choose one of these articles or choose another page you would like to see News articles for.\n"
         
         puts "\n Press any button to continue"
         
@@ -38,7 +38,7 @@ class Cli
         display_page 
         
         until page_number == 'Exit' 
-          puts "\n If you would like to see a different page, type the page number in the format 'Page X', e.g. Page 3. Otherwise please choose the article you would like to read from the list above by typing the article number e.g. 'Article 1' for article 1. To quit type 'Exit'."
+          puts "\n If you would like to see a different page, type the page number in the format 'Page X', e.g. Page 3. Otherwise please choose the article you would like to read from the list above by typing the article number e.g. 'Article 1' for article 1. To quit type 'Exit'.\n"
           
           page_number = gets.strip.capitalize
 
@@ -130,18 +130,18 @@ end
 
 class PartnerError1 < StandardError
   def message 
-    "Input Error: Please type 'Start' to continue or 'Exit' to quit the program."
+    "\nInput Error: Please type 'Start' to continue or 'Exit' to quit the program.\n"
   end
   
   def message2 
-    "Input Error: Please type 'Exit' to end the program or a page number between 0 and 10 to move to a specific page."
+    "\nInput Error: Please type 'Exit' to end the program or a page number between 0 and 10 to move to a specific page.\n"
   end
   
   def message3 
-    "Input Error: Please type 'Exit' to end the program or 'Article X' to move to a specific article out of the ones provided."
+    "\nInput Error: Please type 'Exit' to end the program or 'Article X' to move to a specific article out of the ones provided.\n"
   end
   
   def message4 
-    "Input Error: Please type 'Exit' to end the program or 'Page X' to move to a specific page or 'Article X' to move to a specific article."
+    "\nInput Error: Please type 'Exit' to end the program or 'Page X' to move to a specific page or 'Article X' to move to a specific article.\n"
   end
 end
