@@ -87,6 +87,10 @@ class Cli
           
           end
           
+          if page_number == 'Exit'
+            return
+          end 
+          
           if page_number.include?("Page") 
             display_page(page_number.sub("Page", "").strip.to_i)
           else
@@ -142,7 +146,7 @@ class PartnerError1 < StandardError
   end
   
   def message2 
-    "\nInput Error: Please type 'Exit' to end the program or a page number between 0 and 10 to move to a specific page.\n"
+    "\nInput Error: Please type 'Exit' to end the program or a page number between 1 and 10 to move to a specific page.\n"
   end
   
   def message3 
