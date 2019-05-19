@@ -1,8 +1,6 @@
 # Crunchbase::News
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/crunchbase/news`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+The Crunchbase News Gem is designed to extract news articles from news.crunchbase.com, page by page. The scraper automatically extracts the latest 10 pages of news articles and stores them. It retrieves whichever page of the 10 pages the user specifies and returns a list of articles with the article number, title, date and authors(s) provided. The user can select whether they would like to read any of the articles in further detail by specifying the article number to see the content of the article.   
 
 ## Installation
 
@@ -22,7 +20,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Type the below and follow the on screen prompts.
+
+  ./bin/crunchbase-news
 
 ## Development
 
