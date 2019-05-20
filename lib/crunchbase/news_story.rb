@@ -25,8 +25,13 @@ class NewsStory
   
   def self.extract_crunch_news(news_store_array)
     news_store_array.each do |x|
-      self.new(x)
+      NewsStory.find_or_create_by_url(x)
     end 
   end 
   
+  def self.find_or_create_by_url(x)
+    if !@@all.find{|y| y.url == x[:url]}
+      self.new(x)
+    end 
+  end 
 end

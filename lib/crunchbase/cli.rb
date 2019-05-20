@@ -24,7 +24,7 @@ class Cli
 
       end 
       
-      if input == 'Start' 
+      if input.capitalize == 'Start' 
         puts "\n The scraper is running. It will automatically extract the latest 10 pages of news items."
         
         reset_all
@@ -142,18 +142,18 @@ end
 
 class PartnerError1 < StandardError
   def message 
-    "\nInput Error: Please type 'Start' to continue or 'Exit' to quit the program.\n"
+    "\nInput Error 1: Please type 'Start' to continue or 'Exit' to quit the program.\n"
   end
   
   def message2 
-    "\nInput Error: Please type 'Exit' to end the program or a page number between 1 and 10 to move to a specific page.\n"
+    "\nInput Error 2: Please type 'Exit' to end the program or a page number between 1 and 10 to move to a specific page.\n"
   end
   
   def message3 
-    "\nInput Error: Please type 'Exit' to end the program or 'Article X' to move to a specific article out of the ones provided.\n"
+    "\nInput Error 3: Please type 'Exit' to end the program or 'Article X' to move to a specific article out of the ones provided.\n"
   end
   
   def message4 
-    "\nInput Error: Please type 'Exit' to end the program or 'Page X' to move to a specific page or 'Article X' to move to a specific article.\n"
+    "\nInput Error 4: Please type 'Exit' to end the program or 'Page X' to move to a specific page or 'Article X' to move to a specific article.\n"
   end
 end

@@ -1,7 +1,5 @@
 class Scraper
   
-  attr_accessor :news_scraper
-  
   def self.page_loop(number_of_pages=1)
     NewsStory.clear_all
     i = 1
