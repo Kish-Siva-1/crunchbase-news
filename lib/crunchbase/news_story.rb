@@ -34,4 +34,5 @@ class NewsStory
       self.new(x)
     end 
   end 
+  
 end

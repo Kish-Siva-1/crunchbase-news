@@ -16,6 +16,7 @@ class Cli
         puts "\n The Crunchase News scraper has finished running. News articles for the past 10 pages are available. The first page is displayed above. Choose one of these articles or choose another page you would like to see news articles for.\n"
         
         until page_number == 'Exit' 
+          
           puts "\n If you would like to see a different page, type the page number in the format 'Page X', e.g. Page 3. Otherwise please choose the article you would like to read from the list above by typing the article number in the format 'Article X' e.g. 'Article 1'. To quit type 'Exit'.\n"
           
           page_number = gets.strip.capitalize
@@ -27,14 +28,19 @@ class Cli
           until (page_number.include?('Page') && page_number.sub("Page","").strip.to_i.between?(1,10)) || page_number == 'Exit' || ((page_number.include?('Article') && page_number.sub("Article","").strip.to_i.between?(1,NewsStory.all.select{|x| x.link == "https://news.crunchbase.com/page/#{article_page}"}.count)))  
           
             if page_number.include?('Page') == true && page_number.sub("Page", "").strip.to_i.between?(1,10)==false
+            
               error_mess(2)
               page_number = gets.strip.capitalize
+            
               if page_number.include?('Page') && page_number.sub("Page","").strip.to_i.between?(1,10)
                 article_page = page_number.sub("Page", "").strip.to_i
               end 
+            
             elsif page_number.include?('Article') == true && page_number.sub("Article","").strip.to_i.between?(1,NewsStory.all.select{|x| x.link == "https://news.crunchbase.com/page/#{article_page}"}.count) == false
+              
               error_mess(3)
               page_number = gets.strip.capitalize
+              
               if page_number.include?('Page') && page_number.sub("Page","").strip.to_i.between?(1,10)
                 article_page = page_number.sub("Page", "").strip.to_i
               end 
@@ -43,12 +49,11 @@ class Cli
               
               error_mess(4)
               page_number = gets.strip.capitalize
+              
               if page_number.include?('Page') && page_number.sub("Page","").strip.to_i.between?(1,10)
                 article_page = page_number.sub("Page", "").strip.to_i
               end 
-            
             end
-          
           end
           
           if page_number == 'Exit'
@@ -60,9 +65,7 @@ class Cli
           else
             display_article(page_number.sub("Article", "").strip.to_i, article_page)
           end 
-          
         end 
-        
   end 
 
   def display_article(article_no = 1, page_number=1)
@@ -80,17 +83,21 @@ class Cli
     puts "\nAuthor: #{article_2.author}" 
     puts "\nDate: #{article_2.date}" 
     puts "\nContent: #{article_2.content}"
+  
   end 
   
   def display_page(page_number = 1)
+    
     i=1
     display = NewsStory.all.select{|x| x.link == "https://news.crunchbase.com/page/#{page_number}"}
+    
     display.each do |x|
       puts "\n#{i} Title: #{x.title}"
       puts "  Author: #{x.author}" 
       puts "  Date: #{x.date}" 
       i+=1
     end 
+    
   end 
   
   def reset_all
@@ -115,7 +122,6 @@ class Cli
       end 
     end
   end 
-  
 end 
 
 class PartnerError1 < StandardError
