@@ -4,6 +4,7 @@ class Cli
     input = 'na' 
     page_number = 'na'
     article_page = 1
+    message = 'na'
     
     until input.capitalize == 'Exit' 
       if page_number == 'Exit' then return end 
@@ -14,11 +15,7 @@ class Cli
       until (input == 'Start') || (input == 'Exit')
          
         if (input != 'Start') && (input != 'Exit')
-          begin
-            raise PartnerError1
-          rescue PartnerError1 => error
-              puts error.message
-          end
+          error_mess(1)
           input = gets.strip.capitalize
         end
 
@@ -51,21 +48,13 @@ class Cli
           until (page_number.include?('Page') && page_number.sub("Page","").strip.to_i.between?(1,10)) || page_number == 'Exit' || ((page_number.include?('Article') && page_number.sub("Article","").strip.to_i.between?(1,NewsStory.all.select{|x| x.link == "https://news.crunchbase.com/page/#{article_page}"}.count)))  
           
             if page_number.include?('Page') == true && page_number.sub("Page", "").strip.to_i.between?(1,10)==false
-              begin
-                raise PartnerError1
-              rescue PartnerError1 => error
-                  puts error.message2
-              end
+              error_mess(2)
               page_number = gets.strip.capitalize
               if page_number.include?('Page') && page_number.sub("Page","").strip.to_i.between?(1,10)
                 article_page = page_number.sub("Page", "").strip.to_i
               end 
             elsif page_number.include?('Article') == true && page_number.sub("Article","").strip.to_i.between?(1,NewsStory.all.select{|x| x.link == "https://news.crunchbase.com/page/#{article_page}"}.count) == false
-              begin
-                raise PartnerError1
-              rescue PartnerError1 => error
-                  puts error.message3
-              end
+              error_mess(3)
               page_number = gets.strip.capitalize
               if page_number.include?('Page') && page_number.sub("Page","").strip.to_i.between?(1,10)
                 article_page = page_number.sub("Page", "").strip.to_i
@@ -73,11 +62,7 @@ class Cli
             
             else
               
-              begin
-                raise PartnerError1
-              rescue PartnerError1 => error
-                  puts error.message4
-              end
+              error_mess(4)
               page_number = gets.strip.capitalize
               if page_number.include?('Page') && page_number.sub("Page","").strip.to_i.between?(1,10)
                 article_page = page_number.sub("Page", "").strip.to_i
@@ -136,6 +121,24 @@ class Cli
     input = 'na'
     page_number = 'na'
     article_page = 1
+    message='na'
+  end 
+  
+  def error_mess(error_message=1)
+    begin
+      raise PartnerError1
+    rescue PartnerError1 => error
+      case error_message    
+      when 1 
+        puts error.message
+      when 2
+        puts error.message2 
+      when 3
+        puts error.message3
+      when 4
+        puts error.message4
+      end 
+    end
   end 
   
 end 
