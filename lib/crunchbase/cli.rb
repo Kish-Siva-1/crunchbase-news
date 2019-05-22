@@ -29,7 +29,7 @@ class Cli
           
             if page_number.include?('Page') == true && page_number.sub("Page", "").strip.to_i.between?(1,10)==false
             
-              error_mess(2)
+              error_mess(1)
               page_number = gets.strip.capitalize
             
               if page_number.include?('Page') && page_number.sub("Page","").strip.to_i.between?(1,10)
@@ -38,7 +38,7 @@ class Cli
             
             elsif page_number.include?('Article') == true && page_number.sub("Article","").strip.to_i.between?(1,NewsStory.all.select{|x| x.link == "https://news.crunchbase.com/page/#{article_page}"}.count) == false
               
-              error_mess(3)
+              error_mess(2)
               page_number = gets.strip.capitalize
               
               if page_number.include?('Page') && page_number.sub("Page","").strip.to_i.between?(1,10)
@@ -47,7 +47,7 @@ class Cli
             
             else
               
-              error_mess(4)
+              error_mess(3)
               page_number = gets.strip.capitalize
               
               if page_number.include?('Page') && page_number.sub("Page","").strip.to_i.between?(1,10)
@@ -111,33 +111,28 @@ class Cli
       raise PartnerError1
     rescue PartnerError1 => error
       case error_message    
-      when 1 
-        puts error.message
+      when 1
+        puts error.message 
       when 2
-        puts error.message2 
+        puts error.message2
       when 3
         puts error.message3
-      when 4
-        puts error.message4
       end 
     end
   end 
 end 
 
 class PartnerError1 < StandardError
-  def message 
-    "\nInput Error 1: Please type 'Start' to continue or 'Exit' to quit the program.\n"
+  
+  def message
+    "\nInput Error 1: Please type 'Exit' to end the program or a page number between 1 and 10 to move to a specific page.\n"
   end
   
   def message2 
-    "\nInput Error 2: Please type 'Exit' to end the program or a page number between 1 and 10 to move to a specific page.\n"
+    "\nInput Error 2: Please type 'Exit' to end the program or 'Article X' to move to a specific article out of the ones provided.\n"
   end
   
   def message3 
-    "\nInput Error 3: Please type 'Exit' to end the program or 'Article X' to move to a specific article out of the ones provided.\n"
-  end
-  
-  def message4 
-    "\nInput Error 4: Please type 'Exit' to end the program or 'Page X' to move to a specific page or 'Article X' to move to a specific article.\n"
+    "\nInput Error 3: Please type 'Exit' to end the program or 'Page X' to move to a specific page or 'Article X' to move to a specific article.\n"
   end
 end
