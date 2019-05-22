@@ -4,40 +4,19 @@ class Cli
     input = 'na' 
     page_number = 'na'
     article_page = 1
-    message = 'na'
-    
-    until input.capitalize == 'Exit' 
-      if page_number == 'Exit' then return end 
-      puts "\n Welcome to the Crunchbase News scraper. Type 'Start' to start the scraper. To quit the program type 'Exit'.\n" 
-      
-      input = gets.strip.capitalize
-      
-      until (input == 'Start') || (input == 'Exit')
-         
-        if (input != 'Start') && (input != 'Exit')
-          error_mess(1)
-          input = gets.strip.capitalize
-        end
 
-      end 
-      
-      if input.capitalize == 'Start' 
         puts "\n The scraper is running. It will automatically extract the latest 10 pages of news items."
         
         reset_all
         
         Scraper.page_loop(10)
-
-        puts "\n The Crunchase News scraper has finished running. News articles for the past 10 pages are available. The first page is displayed below. Choose one of these articles or choose another page you would like to see News articles for.\n"
-        
-        puts "\n Press any button to continue"
-        
-        any_key = gets.strip #To slow down the text and allow the person to read the text
         
         display_page 
         
+        puts "\n The Crunchase News scraper has finished running. News articles for the past 10 pages are available. The first page is displayed above. Choose one of these articles or choose another page you would like to see news articles for.\n"
+        
         until page_number == 'Exit' 
-          puts "\n If you would like to see a different page, type the page number in the format 'Page X', e.g. Page 3. Otherwise please choose the article you would like to read from the list above by typing the article number e.g. 'Article 1' for article 1. To quit type 'Exit'.\n"
+          puts "\n If you would like to see a different page, type the page number in the format 'Page X', e.g. Page 3. Otherwise please choose the article you would like to read from the list above by typing the article number in the format 'Article X' e.g. 'Article 1'. To quit type 'Exit'.\n"
           
           page_number = gets.strip.capitalize
 
@@ -84,10 +63,6 @@ class Cli
           
         end 
         
-      end 
-    
-    end 
-    
   end 
 
   def display_article(article_no = 1, page_number=1)
@@ -98,6 +73,7 @@ class Cli
     if article.content == []
       Scraper.content_news_scrape(article.url)
     end 
+    
     article_2 = NewsStory.all.select{|x| x.url == article.url}[0]
     
     puts "\nTitle: #{article_2.title}"
@@ -121,7 +97,6 @@ class Cli
     input = 'na'
     page_number = 'na'
     article_page = 1
-    message='na'
   end 
   
   def error_mess(error_message=1)
